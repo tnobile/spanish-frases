@@ -1,0 +1,20 @@
+<p>quote-list works!</p>
+
+
+<table>
+    <thead>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Quote</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let quote of quotes">
+            <td>{{quote.id}}</td>
+            <td>{{quote.name}}</td>
+            <td>{{quote.quote}}</td>
+            <td>
+                <button (click)="delete(quote.id)">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
