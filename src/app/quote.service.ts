@@ -21,27 +21,21 @@ export class QuoteService {
     this.quotes$ = this.quotesRef.snapshotChanges().pipe(
       map(changes =>
         //changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
-        changes.map(c => ({ id: c.payload.key, name: c.payload.val().name, quote: c.payload.val().quote}))
+        changes.map(c => ({ id: c.payload.key, name: c.payload.val().name, quote: c.payload.val().quote }))
       )
     );
     return this.quotes$;
   }
 
   createQuote(quote: Quote): void {
-    this.quotesRef.push(quote);
-    //const cid = quote.id;
-    //this.quotesRef = this.db.list('/quotes');
-    //this.quoteRef.set({
-    //  cid: {
-    //    name: quote.name,
-    //    quote: quote.quote
-    //  }
-    //});
+    this.quotesRef.push(quote)
+      .catch(error => this.handleError(error));
   }
 
   updateQuote(quote: Quote) {
     this.quoteRef = this.db.object('/quotes/' + quote.id);
-    this.quoteRef.update(quote);
+    this.quoteRef.update(quote)
+      .catch(error => this.handleError(error));
   }
 
   deleteQuote(quoteId: string) {
@@ -51,7 +45,11 @@ export class QuoteService {
       .then(() => {
         console.log("New poll data sent!")
       })
-      .catch(error => console.log("Error when creating new poll.", error));
+      .catch(error => this.handleError(error));
+  }
 
+  // Default error handling for all actions
+  private handleError(error) {
+    console.log(error);
   }
 }

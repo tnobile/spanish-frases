@@ -1,0 +1,15 @@
+<p>Add Quote</p>
+<form>
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" id="name" required
+        [(ngModel)]="model.name" name="name">
+    </div>
+    <div class="form-group">
+        <label for="quote">Quote:</label>
+        <input type="text" class="form-control" id="quote" required
+        [(ngModel)]="model.quote" name="quote">
+    </div>
+    <button type="submit" class="btn btn-success" (click)="onSubmit()">Submit</button>
+    TODO: remove this: {{model.name}}
+</form>
