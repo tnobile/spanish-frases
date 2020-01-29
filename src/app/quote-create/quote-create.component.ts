@@ -24,6 +24,10 @@ export class QuoteCreateComponent implements OnInit {
   onSubmit() {
     const q = new Quote(this.model.name, this.model.quote);
     this.quoteService.createQuote(q);
+   // this.location.back();
+  }
+
+  onCancel() {
     this.location.back();
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QuoteService } from 'src/app/quote.service';
 import { Quote } from 'src/app/quote.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-quote-list',
@@ -12,24 +13,26 @@ export class QuoteListComponent implements OnInit {
   quotes: Quote[] = [];
   selectedQuote: Quote;
 
-  constructor(private quoteService: QuoteService) { }
+  constructor(private quoteService: QuoteService, private router: Router) { }
 
   ngOnInit() {
     this.quoteService.getQuotes().subscribe(data => {
-      this.quotes = data;
+      this.quotes = data.reverse();
     });
 
-    this.create({ id: "1", name: "Tim Smith", quote: "coge el libro", at: new Date().toUTCString() });
-    this.create({ id: "2", name: "James Dean", quote: "practica español", at: new Date().toUTCString() });
+    //this.create({ id: "1", name: "Tim Smith", quote: "coge el libro", at: new Date().toUTCString() });
+    //this.create({ id: "2", name: "James Dean", quote: "practica español", at: new Date().toUTCString() });
   }
 
   create(quote: Quote) {
     console.log('adding: ' + JSON.stringify(quote));
     this.quoteService.createQuote(quote);
   }
-  delete(id: string) {
-    console.log(`deleting ${id}`);
-    this.quoteService.deleteQuote(id);
+  async delete(id: string, event: MouseEvent) {
+    console.log(`deleting ${id}`, event);
+
+    event.stopPropagation();
+    await this.quoteService.deleteQuote(id);
   }
 
   update(quote: Quote) {
@@ -37,8 +40,9 @@ export class QuoteListComponent implements OnInit {
   }
 
   onSelected(quote: Quote) {
-    console.log('got: ' + JSON.stringify(quote));
+    console.log(`selected: ${JSON.stringify(quote)}`);
     this.selectedQuote = quote;
+    this.router.navigate(['detail', quote.id]);
   }
 
   deleteAll() {

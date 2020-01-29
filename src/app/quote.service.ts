@@ -19,12 +19,12 @@ export class QuoteService {
   constructor(private db: AngularFireDatabase) { }
 
   getQuotes() {
-    this.quotesRef = this.db.list('/quotes');
-    this.quotesRef = this.db.list('/quotes', ref => ref.orderByChild('at'))
+    //11this.quotesRef = this.db.list('/quotes');
+    this.quotesRef = this.db.list('/quotes', ref => ref.orderByChild('at').limitToLast(10));
     this.quotes$ = this.quotesRef.snapshotChanges().pipe(
       map(changes =>
         //changes.map(c => ({ id : c.payload.key, ...c.payload.val() }))
-        changes.reverse().map(c => ({
+        changes.map(c => ({
           id: c.payload.key,
           name: c.payload.val().name,
           quote: c.payload.val().quote,
@@ -79,14 +79,17 @@ export class QuoteService {
       .catch(error => this.handleError(error));
   }
 
-  deleteQuote(quoteId: string) {
-    console.log(`really dd ${quoteId}`);
+  async deleteQuote(quoteId: string) {
+    console.log(`deleting: ${quoteId}`);
     this.quoteRef = this.db.object('/quotes/' + quoteId);
-    this.quoteRef.remove()
-      .then(() => {
-        console.log(`${quoteId} successfully removed!`);
-      })
-      .catch(error => this.handleError(error));
+    //this.quoteRef.remove()
+    //  .then(() => {
+    //    console.log(`${quoteId} successfully removed!`);
+    //  })
+    //  .catch(error => {
+    //    this.handleError(error);
+    //  });
+    await this.quoteRef.remove();
   }
 
   deleteAll() {
