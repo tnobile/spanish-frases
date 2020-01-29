@@ -12,16 +12,19 @@ import { environment } from '../environments/environment';
 
 import { QuoteListComponent } from './quote-list/quote-list.component';
 import { QuoteCreateComponent } from './quote-create/quote-create.component';
+import { QuoteDetailComponent } from './quote-detail/quote-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     QuoteListComponent,
-    QuoteCreateComponent
+    QuoteCreateComponent,
+    QuoteDetailComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
 

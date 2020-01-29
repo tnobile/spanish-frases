@@ -1,0 +1,19 @@
+<div *ngIf='quote'>
+    <form>
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" required [(ngModel)]="quote.name" name="name">
+        </div>
+        <div class="form-group">
+            <label for="quote">Quote:</label>
+            <input type="text" class="form-control" id="quote" required [(ngModel)]="quote.quote" name="quote">
+        </div>
+        <p>{{quote.at}}</p>
+        <div class="col-md-12">
+            <div class="btn-group">
+                <button class='btn btn-primary' (click)="goBack()">Go Back</button>
+                <button class='btn btn-primary' (click)="update()">Update</button>
+            </div>
+        </div>
+    </form>
+</div>

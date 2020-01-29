@@ -1,17 +1,20 @@
-<p>quote-list works!</p>
-
-
-<table>
+<button class="btn btn-danger" (click)="deleteAll()">DeleteAll</button>
+<table class='table htable-striped table-hover table-condensed'>
     <thead>
         <th>Id</th>
         <th>Name</th>
         <th>Quote</th>
+        <th>Time</th>
+        <th>Delete</th>
     </thead>
     <tbody>
-        <tr *ngFor="let quote of quotes">
+        <!-- <tr *ngFor="let quote of quotes" (click)='onSelected(quote)'> -->
+        <tr *ngFor="let quote of quotes" (click)='onSelected(quote)' routerLink='/detail/{{quote.id}}'> 
+
             <td>{{quote.id}}</td>
             <td>{{quote.name}}</td>
             <td>{{quote.quote}}</td>
+            <td>{{quote.at}}</td>
             <td>
                 <button (click)="delete(quote.id)">Delete</button>
             </td>

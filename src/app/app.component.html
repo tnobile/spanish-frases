@@ -1,8 +1,11 @@
 <h2>{{title}}</h2>
 
 <div>
+
   La idea es mostrar las palabras y frases en Español aquí.
 </div>
-
-<app-quote-create></app-quote-create>
-<app-quote-list></app-quote-list>
+<nav>
+  <a routerLink="/quotes">Quotes</a>
+  <a routerLink="/create">Add</a>
+</nav>
+<router-outlet></router-outlet>

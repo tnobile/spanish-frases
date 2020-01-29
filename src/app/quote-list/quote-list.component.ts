@@ -10,24 +10,21 @@ import { Quote } from 'src/app/quote.model';
 export class QuoteListComponent implements OnInit {
 
   quotes: Quote[] = [];
+  selectedQuote: Quote;
 
   constructor(private quoteService: QuoteService) { }
 
   ngOnInit() {
     this.quoteService.getQuotes().subscribe(data => {
-      //data.forEach(d => {
-      //  const q = d as Quote;
-      //  console.log("Got " + q.id);
-      //  this.quotes.push(d as Quote);
-      //});
       this.quotes = data;
     });
 
-    this.create({ id: "1", name: "ta", quote: "what:s", })
-    this.create({ id: "2", name: "ta", quote: "what:s", })
+    this.create({ id: "1", name: "Tim Smith", quote: "coge el libro", at: new Date().toUTCString() });
+    this.create({ id: "2", name: "James Dean", quote: "practica español", at: new Date().toUTCString() });
   }
 
   create(quote: Quote) {
+    console.log('adding: ' + JSON.stringify(quote));
     this.quoteService.createQuote(quote);
   }
   delete(id: string) {
@@ -39,4 +36,12 @@ export class QuoteListComponent implements OnInit {
     this.quoteService.updateQuote(quote);
   }
 
+  onSelected(quote: Quote) {
+    console.log('got: ' + JSON.stringify(quote));
+    this.selectedQuote = quote;
+  }
+
+  deleteAll() {
+    this.quoteService.deleteAll();
+  }
 }

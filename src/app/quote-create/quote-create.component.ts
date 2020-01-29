@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { QuoteService } from "../quote.service";
 import { Quote } from "../quote.model"
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -12,16 +13,17 @@ import { Quote } from "../quote.model"
 })
 export class QuoteCreateComponent implements OnInit {
 
-  constructor(private fromBuilder: FormBuilder, private quoteService: QuoteService) { }
+  constructor(private fromBuilder: FormBuilder, private quoteService: QuoteService, private location: Location) { }
 
   model: Quote;
 
   ngOnInit() {
-    this.model = { id: "x", name: "bitch", quote: "a quien madruga Dios le ayuda" };
+    this.model = new Quote("bitch", "a quien madruga Dios le ayuda");
   }
 
   onSubmit() {
-    this.quoteService.createQuote({ id: "id", name: this.model.name, quote: this.model.quote });
-    console.log("submitted");
+    const q = new Quote(this.model.name, this.model.quote);
+    this.quoteService.createQuote(q);
+    this.location.back();
   }
 }
